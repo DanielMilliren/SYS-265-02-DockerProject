@@ -1,0 +1,41 @@
+services:
+  gerrit:
+    image: gerritcodereview/gerrit:latest
+    #http is on port 8080
+    ports:
+      - 29418:29418
+      - 8080:8080
+    #The directory structure should be as follows:
+    # - compose.yaml
+    # - gerrit/
+    #   - etc/
+    #   - git/
+    #   - db/
+    #   - index/
+    #   - cache/
+    volumes:
+      - ./gerrit/etc:/var/gerrit/etc
+      - ./gerrit/git:/var/gerrit/git
+      - ./gerrit/db:/var/gerrit/db
+      - ./gerrit/index:/var/gerrit/index
+      - ./gerrit/cache:/var/gerrit/cache
+    #command: init
+volumes:
+  #all volumes are external
+  #names are in quotes to avoid errors
+  #the folder "./" is the folder this file is in
+  git:
+    name: "./gerrit/git"
+    external: true
+  etc:
+    name: "./gerrit/etc"
+    external: true
+  index:
+    name: "./gerrit/index"
+    external: true
+  cache:
+    name: "./gerrit/cache"
+    external: true
+  db:
+    name: "./gerrit/db"
+    external: true
